@@ -84,3 +84,35 @@ Verify:
 ```bash
 sudo docker run --rm --runtime=nvidia --gpus all ubuntu nvidia-smi
 ```
+
+
+# run TGI
+
+Setup enviornment variables:
+
+```bash
+mkdir data
+volume=$PWD/data
+token={YOUR_HF_TOKEN}
+```
+
+Build and run:
+
+```bash
+docker build -t tgi .
+docker run --gpus all --shm-size 1g --network host -v $volume:/data -e HUGGING_FACE_HUB_TOKEN=$token -it tgi
+```
+
+# run benchmark
+
+Download the weights
+
+```bash
+text-generation-server download-weights meta-llama/Llama-2-7b-hf
+```
+
+launch jupyter server
+```bash
+jupyter notebook --allow-root
+```
+
