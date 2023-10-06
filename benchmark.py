@@ -90,13 +90,16 @@ def run_benchmark(model_id, batch_sizes=[1], max_new_tokens=100):
         clm_batch = make_clm_batch(model, batch_size=batch_size, max_new_tokens=max_new_tokens)
 
         with torch.no_grad():
-
             start = time.perf_counter()
             for _ in range(max_new_tokens):
                 generations, clm_batch = model.generate_token(clm_batch)
 
             torch.cuda.synchronize()
             end = time.perf_counter()
+
+            for generation in generations:
+                assert generation.generated_text.generated_tokens == max_new_tokens
+            assert len(generations) == batch_size
 
         total_time = end - start
         total_tokens = batch_size * max_new_tokens
