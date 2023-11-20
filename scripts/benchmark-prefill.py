@@ -92,6 +92,7 @@ def run_benchmark(model_id, batch_sizes=[1], prefill_tokens=100):
     for batch_size in batch_sizes:
 
         clm_batch = make_clm_batch(model, batch_size=batch_size, prefill_tokens=prefill_tokens)
+        print(clm_batch.input_lengths_tensor)
 
         with torch.no_grad():
             start = time.perf_counter()
