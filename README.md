@@ -92,7 +92,6 @@ Setup enviornment variables:
 
 ```bash
 mkdir data
-volume=$PWD/data
 token={YOUR_HF_TOKEN}
 ```
 
@@ -100,7 +99,7 @@ Build and run:
 
 ```bash
 docker build -t tgi .
-docker run --gpus all --shm-size 1g --network host -v $volume:/data -e HUGGING_FACE_HUB_TOKEN=$token -it tgi
+docker run --gpus all --shm-size 1g --network host -v $PWD/data:/data -v $PWD/scripts:/script -e HUGGING_FACE_HUB_TOKEN=$token -it tgi
 ```
 
 # run benchmark
